@@ -1,7 +1,12 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models;
 
-public class Image {
+import javax.persistence.*;
 
+@Entity
+@Table(name="images", schema = "public")
+public class Image {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String url;
     private Integer height;

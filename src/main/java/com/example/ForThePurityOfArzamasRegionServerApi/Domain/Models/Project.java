@@ -1,7 +1,12 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models;
 
-public class Project {
+import javax.persistence.*;
 
+@Entity
+@Table(name="projects", schema = "public")
+public class Project {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String message;

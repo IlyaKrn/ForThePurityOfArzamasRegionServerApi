@@ -1,7 +1,12 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models;
 
-public class Event {
+import javax.persistence.*;
 
+@Entity
+@Table(name="events", schema = "public")
+public class Event {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String message;

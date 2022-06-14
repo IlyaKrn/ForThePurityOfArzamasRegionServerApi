@@ -1,6 +1,12 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="users", schema = "public")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer email;
     private String password;
