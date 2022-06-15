@@ -28,19 +28,17 @@ public class GetAllUsersUseCase {
             ArrayList<User> us = (ArrayList<User>) userRepository.findAll();
             try {
                 for(User u : us) {
-                    try {
-                        ImageResponse img = null;
-                        if(u.getImage_id() != null){
+                    ImageResponse img = null;
+                    if(u.getImage_id() != null){
+                        try {
                             Image i = imageRepository.findById(u.getImage_id()).get();
                             img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
+                        } catch (Exception e) {
+                            img = null;
                         }
-                        UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
-                        users.add(res);
-                    } catch (Exception e) {
-                        response.setError(new ResponseError("Image not found", String.format("image with id %d not found: %s", u.getImage_id(), e.getMessage()), 404));
-                        return response;
                     }
-
+                    UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
+                    users.add(res);
                 }
 
             }catch (Exception e){

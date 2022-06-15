@@ -31,7 +31,6 @@ public class UserController {
         if(user_ids == null){
             GetAllUsersUseCase getAllUsersUseCase = new GetAllUsersUseCase(userRepository, imageRepository);
             return getAllUsersUseCase.execute();
-
         }
         else{
             ArrayList<Integer> ids = new ArrayList<>();
@@ -40,7 +39,7 @@ public class UserController {
                     ids.add(Integer.valueOf(s));
                 }
                 catch(Exception e) {
-                    response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 500));
+                    response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 400));
                     return response;
                 }
             }
