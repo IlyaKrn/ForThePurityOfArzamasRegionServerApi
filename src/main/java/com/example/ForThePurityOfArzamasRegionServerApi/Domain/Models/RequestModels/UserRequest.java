@@ -5,12 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity
-@Table(name="users", schema = "public")
 public class UserRequest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
     private Integer email;
     private String password;
     private String score;

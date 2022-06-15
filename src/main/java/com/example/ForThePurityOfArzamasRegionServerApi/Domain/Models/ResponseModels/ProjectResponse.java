@@ -5,11 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity
-@Table(name="projects", schema = "public")
 public class ProjectResponse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
     private String title;
     private String message;
