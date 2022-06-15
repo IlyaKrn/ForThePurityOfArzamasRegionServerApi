@@ -2,19 +2,18 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Web.Controllers;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.Image;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.User;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.UserRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ImageResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseError;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.CreateUserUseCase;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.GetUserListByIdUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("method")
@@ -28,48 +27,18 @@ public class UserController {
     @GetMapping("users.getById")
     public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUsers(@RequestParam(value = "user_ids", required = false) String user_ids) {
         ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
-        try {
-            ArrayList<UserResponse> users = new ArrayList<>();
-            ArrayList<Integer> ids = new ArrayList<>();
-            for (String s : user_ids.split(",")){
-                try {
-                    ids.add(Integer.valueOf(s));
-                }
-                catch(Exception e) {
-                    response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 500));
-                    return response;
-                }
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (String s : user_ids.split(",")){
+            try {
+                ids.add(Integer.valueOf(s));
             }
-
-            for(Integer id : ids) {
-                try {
-                    User u = userRepository.findById(id).get();
-                    try {
-
-                        ImageResponse img = null;
-                        if(u.getImage_id() != null){
-                            Image i = imageRepository.findById(u.getImage_id()).get();
-                            img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
-                        }
-
-                        UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
-                        users.add(res);
-                    } catch (Exception e) {
-                        response.setError(new ResponseError("Image not found", String.format("image with id %d not found: %s", u.getImage_id(), e.getMessage()), 500));
-                        return response;
-                    }
-                } catch (Exception e){
-                    response.setError(new ResponseError("User not found", String.format("user with id %d not found: %s", id, e.getMessage()), 404));
-                    return response;
-                }
+            catch(Exception e) {
+                response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 500));
+                return response;
             }
-            response.setResponse(users);
-            return response;
-        } catch (Exception e){
-            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
-            return response;
         }
-
+        GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
+        return getUserListById.execute();
     }
 
     @PostMapping("users.setById")
@@ -81,28 +50,8 @@ public class UserController {
 
     @PostMapping("users.create")
     public @ResponseBody ResponseModel<UserResponse> createUser(@RequestBody UserRequest user) {
-        ResponseModel<UserResponse> response = new ResponseModel<>();
-        try {
-            if(user.getEmail() == null || user.getPassword() == null || user.getFirst_name() == null || user.getLast_name() == null){
-                response.setError(new ResponseError("Unexpected null data", String.format("Fields 'email', 'password', 'first_name', 'last_name' must be not null"), 400));
-            }
-            User u = new User(null, user.getEmail(), user.getPassword(), 0, user.getFirst_name(), user.getLast_name(), false, false, false, false,System.currentTimeMillis(), null);
-            User temp = userRepository.save(u);
-            ImageResponse image = null;
-            if (temp.getImage_id() != null){
-                try {
-                    Image i = imageRepository.findById(temp.getImage_id()).get();
-                    image = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
-                } catch (Exception e){
-                    image = null;
-                }
-            }
-            response.setResponse(new UserResponse(temp.getImage_id(), temp.getEmail(), temp.getPassword(), temp.getScore(), temp.getFirst_name(), temp.getLast_name(), temp.getIs_admin(), temp.getIs_online(), temp.getIs_banned(), temp.getIs_verified(), temp.getLast_session(), image));
-            return response;
-        } catch (Exception e) {
-            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
-            return response;
-        }
+        CreateUserUseCase createUserUseCase = new CreateUserUseCase(userRepository, imageRepository, user);
+        return createUserUseCase.execute();
     }
 
     @PostMapping("users.delete")
@@ -110,28 +59,4 @@ public class UserController {
 
         return null;
     }
-
-    @GetMapping("users.getIds")
-    public @ResponseBody ResponseModel<ArrayList<Integer>> getUserIds(@RequestParam(value = "count", required = false) Integer count) {
-        ResponseModel<ArrayList<Integer>> response = new ResponseModel<>();
-        try {
-            ArrayList<Integer> ids = new ArrayList<>();
-            try{
-                ArrayList<User> arr = (ArrayList<User>) userRepository.findAll();
-                for(User i : arr){
-                    ids.add(i.getId());
-                }
-                response.setResponse(ids);
-                return response;
-            } catch (Exception e) {
-                response.setError(new ResponseError("Users not found", "0 users found", 404));
-                return response;
-            }
-        } catch (Exception e) {
-            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
-            return response;
-        }
-    }
-
-
 }
