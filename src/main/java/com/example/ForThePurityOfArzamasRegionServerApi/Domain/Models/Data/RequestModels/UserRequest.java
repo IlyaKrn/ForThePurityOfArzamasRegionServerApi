@@ -1,19 +1,17 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.DatabaseModels;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@Table(name="users", schema = "public")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserRequest {
+
     private String email;
     private String password;
-    private String score;
+    private Integer score;
     private String first_name;
     private String last_name;
     private Boolean is_admin;

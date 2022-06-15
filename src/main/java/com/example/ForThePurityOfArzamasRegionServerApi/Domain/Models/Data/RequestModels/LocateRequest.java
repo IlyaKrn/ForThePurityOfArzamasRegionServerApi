@@ -1,10 +1,12 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.RequestModels;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class LocateRequest {
 
     private String title;

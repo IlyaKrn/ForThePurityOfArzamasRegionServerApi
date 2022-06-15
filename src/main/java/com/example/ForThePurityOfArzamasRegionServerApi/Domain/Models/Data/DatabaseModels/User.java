@@ -1,13 +1,19 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseModels;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels;
 
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.DatabaseModels.Image;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-public class UserResponse {
-
+@Entity
+@Table(name="users", schema = "public")
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;
     private String password;
@@ -19,6 +25,6 @@ public class UserResponse {
     private Boolean is_banned;
     private Boolean is_verified;
     private Long last_session;
-    private ImageResponse image;
+    private Integer image_id;
 
 }

@@ -1,12 +1,15 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.RequestModels;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Data
-public class UserRequest {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserResponse {
 
+    private Integer id;
     private String email;
     private String password;
     private Integer score;
@@ -17,6 +20,6 @@ public class UserRequest {
     private Boolean is_banned;
     private Boolean is_verified;
     private Long last_session;
-    private Integer image_id;
+    private ImageResponse image;
 
 }

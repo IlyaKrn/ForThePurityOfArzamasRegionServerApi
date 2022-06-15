@@ -1,11 +1,14 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseModels;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MessageResponse {
 
     private Integer id;

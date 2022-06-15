@@ -1,11 +1,8 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Web.Controllers;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ProjectRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.RequestModels.ProjectRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.RequestModels.UserRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseModels.ProjectResponse;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseModels.UserResponse;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.ProjectRequest;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ProjectResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

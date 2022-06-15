@@ -1,16 +1,12 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Web.Controllers;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.EventRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.RequestModels.EventRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.RequestModels.MessageRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseModels.ChatResponse;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseModels.MessageResponse;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseModels.ProjectResponse;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.MessageRequest;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("method")
