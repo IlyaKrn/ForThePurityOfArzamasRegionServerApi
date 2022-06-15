@@ -1,8 +1,11 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name="chats", schema = "public")
 public class Chat {
