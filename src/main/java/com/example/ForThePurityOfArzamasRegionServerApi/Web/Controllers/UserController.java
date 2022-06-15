@@ -36,7 +36,7 @@ public class UserController {
                     ids.add(Integer.valueOf(s));
                 }
                 catch(Exception e) {
-                    response.setError(new ResponseError("Type casting error", "user id must be integer value", 500));
+                    response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 500));
                     return response;
                 }
             }
@@ -55,18 +55,18 @@ public class UserController {
                         UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
                         users.add(res);
                     } catch (Exception e) {
-                        response.setError(new ResponseError("Image not found", String.format("image with id %d not found", u.getImage_id()), 500));
+                        response.setError(new ResponseError("Image not found", String.format("image with id %d not found: %s", u.getImage_id(), e.getMessage()), 500));
                         return response;
                     }
                 } catch (Exception e){
-                    response.setError(new ResponseError("User not found", String.format("user with id %d not found", id), 404));
+                    response.setError(new ResponseError("User not found", String.format("user with id %d not found: %s", id, e.getMessage()), 404));
                     return response;
                 }
             }
             response.setResponse(users);
             return response;
         } catch (Exception e){
-            response.setError(new ResponseError("Internal unexpected server error", "something went wrong", 500));
+            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
             return response;
         }
 
@@ -80,9 +80,26 @@ public class UserController {
 
 
     @PostMapping("users.create")
-    public @ResponseBody String createUser(@RequestBody UserRequest user) {
-
-        return null;
+    public @ResponseBody ResponseModel<UserResponse> createUser(@RequestBody UserRequest user) {
+        ResponseModel<UserResponse> response = new ResponseModel<>();
+        try {
+            User u = new User(null, user.getEmail(), user.getPassword(), 0, user.getFirst_name(), user.getLast_name(), false, false, false, false,System.currentTimeMillis(), null);
+            User temp = userRepository.save(u);
+            ImageResponse image = null;
+            if (temp.getImage_id() != null){
+                try {
+                    Image i = imageRepository.findById(temp.getImage_id()).get();
+                    image = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
+                } catch (Exception e){
+                    image = null;
+                }
+            }
+            response.setResponse(new UserResponse(temp.getImage_id(), temp.getEmail(), temp.getPassword(), temp.getScore(), temp.getFirst_name(), temp.getLast_name(), temp.getIs_admin(), temp.getIs_online(), temp.getIs_banned(), temp.getIs_verified(), temp.getLast_session(), image));
+            return response;
+        } catch (Exception e) {
+            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
+            return response;
+        }
     }
 
     @PostMapping("users.delete")
@@ -108,7 +125,7 @@ public class UserController {
                 return response;
             }
         } catch (Exception e) {
-            response.setError(new ResponseError("Internal unexpected server error", "something went wrong", 500));
+            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
             return response;
         }
     }
