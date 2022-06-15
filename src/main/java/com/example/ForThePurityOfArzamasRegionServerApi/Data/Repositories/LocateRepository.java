@@ -1,7 +1,6 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories;
 
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Locate;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.User;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.DatabaseModels.Locate;
 import org.springframework.data.repository.CrudRepository;
 
 public interface LocateRepository extends CrudRepository<Locate, Integer> {

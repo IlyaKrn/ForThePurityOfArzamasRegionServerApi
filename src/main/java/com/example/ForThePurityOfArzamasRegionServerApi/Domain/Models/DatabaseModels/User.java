@@ -1,4 +1,4 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.DatabaseModels;
 
 import lombok.Data;
 

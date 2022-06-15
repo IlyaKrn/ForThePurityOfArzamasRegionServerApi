@@ -1,4 +1,4 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.RequestModels;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name="events", schema = "public")
-public class Event {
+public class EventRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
