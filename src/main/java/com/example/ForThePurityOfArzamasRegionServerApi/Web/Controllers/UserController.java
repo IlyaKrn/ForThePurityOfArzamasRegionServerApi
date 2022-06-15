@@ -8,6 +8,7 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.Re
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.CreateUserUseCase;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.GetAllUsersUseCase;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.GetUserListByIdUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,18 +28,26 @@ public class UserController {
     @GetMapping("users.getById")
     public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUsers(@RequestParam(value = "user_ids", required = false) String user_ids) {
         ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
-        ArrayList<Integer> ids = new ArrayList<>();
-        for (String s : user_ids.split(",")){
-            try {
-                ids.add(Integer.valueOf(s));
-            }
-            catch(Exception e) {
-                response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 500));
-                return response;
-            }
+        if(user_ids == null){
+            GetAllUsersUseCase getAllUsersUseCase = new GetAllUsersUseCase(userRepository, imageRepository);
+            return getAllUsersUseCase.execute();
+
         }
-        GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
-        return getUserListById.execute();
+        else{
+            ArrayList<Integer> ids = new ArrayList<>();
+            for (String s : user_ids.split(",")){
+                try {
+                    ids.add(Integer.valueOf(s));
+                }
+                catch(Exception e) {
+                    response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 500));
+                    return response;
+                }
+            }
+            GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
+            return getUserListById.execute();
+        }
+
     }
 
     @PostMapping("users.setById")
