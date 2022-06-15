@@ -83,6 +83,9 @@ public class UserController {
     public @ResponseBody ResponseModel<UserResponse> createUser(@RequestBody UserRequest user) {
         ResponseModel<UserResponse> response = new ResponseModel<>();
         try {
+            if(user.getEmail() == null || user.getPassword() == null || user.getFirst_name() == null || user.getLast_name() == null){
+                response.setError(new ResponseError("Unexpected null data", String.format("Fields 'email', 'password', 'first_name', 'last_name' must be not null"), 400));
+            }
             User u = new User(null, user.getEmail(), user.getPassword(), 0, user.getFirst_name(), user.getLast_name(), false, false, false, false,System.currentTimeMillis(), null);
             User temp = userRepository.save(u);
             ImageResponse image = null;
