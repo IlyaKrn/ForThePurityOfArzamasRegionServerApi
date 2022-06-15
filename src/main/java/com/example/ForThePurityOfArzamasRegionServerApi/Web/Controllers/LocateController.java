@@ -41,7 +41,7 @@ public class LocateController {
     }
 
     @PostMapping("locates.delete")
-    public @ResponseBody String deleteLocateById(@RequestParam("locate_id") String locate_id) {
+    public @ResponseBody String deleteLocateById(@RequestParam("user_deleter_id") String user_deleter_id, @RequestParam("locate_id") String locate_id) {
 
         return null;
     }

@@ -40,7 +40,7 @@ public class EventController {
     }
 
     @PostMapping("events.delete")
-    public @ResponseBody String deleteEventById(@RequestParam("event_id") String event_id) {
+    public @ResponseBody String deleteEventById(@RequestParam("user_deleter_id") String user_deleter_id, @RequestParam("event_id") String event_id) {
 
         return null;
     }

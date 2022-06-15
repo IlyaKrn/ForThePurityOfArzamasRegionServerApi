@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("users.delete")
-    public @ResponseBody String deleteUserById(@RequestParam("user_id") String user_id) {
+    public @ResponseBody String deleteUserById(@RequestParam("user_deleter_id") String user_deleter_id, @RequestParam("user_id") String user_id) {
 
         return null;
     }

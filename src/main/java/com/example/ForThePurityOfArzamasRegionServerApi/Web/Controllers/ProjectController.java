@@ -41,7 +41,7 @@ public class ProjectController {
     }
 
     @PostMapping("projects.delete")
-    public @ResponseBody String deleteProjectById(@RequestParam("project_id") String project_id) {
+    public @ResponseBody String deleteProjectById(@RequestParam("user_deleter_id") String user_deleter_id, @RequestParam("project_id") String project_id) {
 
         return null;
     }
