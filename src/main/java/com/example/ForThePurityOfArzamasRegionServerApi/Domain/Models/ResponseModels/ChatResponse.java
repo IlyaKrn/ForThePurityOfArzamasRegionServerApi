@@ -4,11 +4,12 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseM
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 public class ChatResponse {
 
     private Integer id;
-    private Integer[] message_ids;
+    private List<MessageResponse> messages;
     private Integer[] banned_user_ids;
 }

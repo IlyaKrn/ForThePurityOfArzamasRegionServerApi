@@ -3,6 +3,7 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseM
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 public class LocateResponse {
@@ -12,7 +13,7 @@ public class LocateResponse {
     private String message;
     private Long upload_time;
     private Long last_modified_time;
-    private Integer[] image_ids;
+    private List<ImageResponse> images;
     private Integer chat_id;
     private String address;
     private Double longitude;

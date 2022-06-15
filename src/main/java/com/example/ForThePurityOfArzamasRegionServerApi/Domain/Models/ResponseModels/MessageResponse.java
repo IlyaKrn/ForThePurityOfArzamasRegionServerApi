@@ -3,12 +3,13 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseM
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 public class MessageResponse {
 
     private Integer id;
     private Integer user_id;
-    private Integer[] image_ids;
+    private List<ImageResponse> images;
     private String message;
 }

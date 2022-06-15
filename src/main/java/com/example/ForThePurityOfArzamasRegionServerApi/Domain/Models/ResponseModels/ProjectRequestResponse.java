@@ -3,6 +3,7 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.ResponseM
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 public class ProjectRequestResponse {
@@ -10,5 +11,5 @@ public class ProjectRequestResponse {
     private Integer id;
     private Integer user_id;
     private String message;
-    private Integer[] image_ids;
+    private List<ImageResponse> images;
 }
