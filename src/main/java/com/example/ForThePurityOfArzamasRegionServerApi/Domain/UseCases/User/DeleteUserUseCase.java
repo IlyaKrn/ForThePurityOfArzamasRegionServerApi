@@ -16,25 +16,24 @@ public class DeleteUserUseCase {
     private Integer id;
     private Integer deleterId;
 
+    public DeleteUserUseCase(UserRepository userRepository, Integer id, Integer deleterId) {
+        this.userRepository = userRepository;
+        this.id = id;
+        this.deleterId = deleterId;
+    }
+
     public ResponseModel<UserResponse> execute(){
         ResponseModel<UserResponse> response = new ResponseModel<>();
         try {
-            if(id != null && deleterId != null){
-                if(id.equals(deleterId)) {
-                    userRepository.deleteById(id);
-                    response.setResponse(null);
-                    return response;
-                }
-                else {
-                    response.setError(new ResponseError("No have permission for delete user", String.format("user can be deleted by them only"), 400));
-                    return response;
-                }
-            }
-            else {
-                response.setError(new ResponseError("Id is null", String.format("user id must be not null"), 400));
+            if(id.equals(deleterId)) {
+                userRepository.deleteById(id);
+                response.setResponse(null);
                 return response;
             }
-
+            else {
+                response.setError(new ResponseError("No have permission for delete user", String.format("user can be deleted by them only"), 400));
+                return response;
+            }
         } catch (Exception e){
             response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
             return response;
