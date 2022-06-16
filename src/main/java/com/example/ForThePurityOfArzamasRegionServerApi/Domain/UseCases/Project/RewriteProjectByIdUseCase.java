@@ -27,9 +27,10 @@ public class RewriteProjectByIdUseCase {
     private Integer id;
     private HashMap<String, Object> values;
 
-    public RewriteProjectByIdUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, Integer id, HashMap<String, Object> values) {
+    public RewriteProjectByIdUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, ProjectRequestRepository requestRepository, Integer id, HashMap<String, Object> values) {
         this.projectRepository = projectRepository;
         this.imageRepository = imageRepository;
+        this.requestRepository = requestRepository;
         this.id = id;
         this.values = values;
     }

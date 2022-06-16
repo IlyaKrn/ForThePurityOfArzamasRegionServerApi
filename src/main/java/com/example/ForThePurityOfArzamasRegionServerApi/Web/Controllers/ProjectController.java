@@ -41,7 +41,7 @@ public class ProjectController {
     }
 
     @GetMapping("projects.getListById")
-    public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUserListById(@RequestParam(value = "project_ids") String project_ids) {
+    public @ResponseBody ResponseModel<ArrayList<ProjectResponse>> getUserListById(@RequestParam(value = "project_ids") String project_ids) {
         ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
         ArrayList<Integer> ids = new ArrayList<>();
         for (String s : project_ids.split(",")){
@@ -53,13 +53,13 @@ public class ProjectController {
             }
         }
 
-        GetProjectListByIdUseCase getProjectListById = new GetProjectListByIdUseCase(projectRepository, imageRepository, ids);
+        GetProjectListByIdUseCase getProjectListById = new GetProjectListByIdUseCase(projectRepository, requestRepository, imageRepository, ids);
         return getProjectListById.execute();
     }
 
     @PostMapping("projects.setById")
-    public @ResponseBody ResponseModel<UserResponse> setProjectById(@RequestParam("project_id") Integer project_id, @RequestBody HashMap<String, Object> values) {
-        RewriteProjectByIdUseCase getAllProjectsUseCase = new RewriteProjectByIdUseCase(projectRepository, imageRepository, project_id, values);
+    public @ResponseBody ResponseModel<ProjectResponse> setProjectById(@RequestParam("project_id") Integer project_id, @RequestBody HashMap<String, Object> values) {
+        RewriteProjectByIdUseCase getAllProjectsUseCase = new RewriteProjectByIdUseCase(projectRepository, imageRepository, requestRepository, project_id, values);
         return getAllProjectsUseCase.execute();
     }
 

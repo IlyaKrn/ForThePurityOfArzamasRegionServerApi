@@ -23,8 +23,9 @@ public class GetProjectListByIdUseCase {
     private ImageRepository imageRepository;
     private ArrayList<Integer> ids;
 
-    public GetProjectListByIdUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, ArrayList<Integer> ids) {
+    public GetProjectListByIdUseCase(ProjectRepository projectRepository, ProjectRequestRepository requestRepository, ImageRepository imageRepository, ArrayList<Integer> ids) {
         this.projectRepository = projectRepository;
+        this.requestRepository = requestRepository;
         this.imageRepository = imageRepository;
         this.ids = ids;
     }
