@@ -22,9 +22,10 @@ public class GetProjectListAllUseCase {
     private ImageRepository imageRepository;
     private ProjectRequestRepository requestRepository;
 
-    public GetProjectListAllUseCase(ProjectRepository projectRepository, ImageRepository imageRepository) {
+    public GetProjectListAllUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, ProjectRequestRepository requestRepository) {
         this.projectRepository = projectRepository;
         this.imageRepository = imageRepository;
+        this.requestRepository = requestRepository;
     }
 
     public ResponseModel<ArrayList<ProjectResponse>> execute(){
@@ -59,7 +60,7 @@ public class GetProjectListAllUseCase {
                                 for(Integer idd : p.getImage_ids()) {
                                     ImageResponse imgg = null;
                                     try {
-                                        Image ii = imageRepository.findById(id).get();
+                                        Image ii = imageRepository.findById(idd).get();
                                         imgg = new ImageResponse(i.getId(), ii.getUrl(), ii.getHeight(), ii.getWidth());
                                         images.add(imgg);
                                     } catch (Exception e) {

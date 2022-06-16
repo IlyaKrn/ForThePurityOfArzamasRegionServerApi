@@ -1,79 +1,104 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.Project;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
+import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ProjectRepository;
+import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ProjectRequestRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.Image;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.Project;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.ProjectRequest;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.User;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ImageResponse;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ProjectRequestResponse;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ProjectResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RewriteProjectByIdUseCase {
 
-    private UserRepository userRepository;
+    private ProjectRepository projectRepository;
     private ImageRepository imageRepository;
+    private ProjectRequestRepository requestRepository;
     private Integer id;
     private HashMap<String, Object> values;
 
-    public RewriteProjectByIdUseCase(UserRepository userRepository, ImageRepository imageRepository, Integer id, HashMap<String, Object> values) {
-        this.userRepository = userRepository;
+    public RewriteProjectByIdUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, Integer id, HashMap<String, Object> values) {
+        this.projectRepository = projectRepository;
         this.imageRepository = imageRepository;
         this.id = id;
         this.values = values;
     }
 
-    public ResponseModel<UserResponse> execute(){
-        ResponseModel<UserResponse> response = new ResponseModel<>();
+    public ResponseModel<ProjectResponse> execute(){
+        ResponseModel<ProjectResponse> response = new ResponseModel<>();
         try {
-            User u = userRepository.findById(id).get();
-            ImageResponse img = null;
-            try {
-                if(u.getImage_id() != null){
-                    Image i = imageRepository.findById(u.getImage_id()).get();
-                    img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
+            Project p = projectRepository.findById(id).get();
+            ArrayList<ImageResponse> images = new ArrayList<>();
+            if (p.getImage_ids() != null && p.getImage_ids().length > 0) {
+                for(Integer id : p.getImage_ids()) {
+                    ImageResponse img = null;
+                    try {
+                        Image i = imageRepository.findById(id).get();
+                        img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
+                        images.add(img);
+                    } catch (Exception e) {
+                        images.add(null);
+                    }
                 }
-            } catch (Exception ignored) {
+            }
+            ArrayList<ProjectRequestResponse> requests = new ArrayList<>();
+            if (p.getRequest_ids() != null && p.getRequest_ids().length > 0) {
+                for (Integer id : p.getRequest_ids()) {
+                    ProjectRequestResponse req = null;
+                    try {
+                        ProjectRequest i = requestRepository.findById(id).get();
 
+
+                        ArrayList<ImageResponse> imgs = new ArrayList<>();
+                        if (i.getImage_ids() != null && i.getImage_ids().length > 0) {
+                            for (Integer idd : p.getImage_ids()) {
+                                ImageResponse imgg = null;
+                                try {
+                                    Image ii = imageRepository.findById(idd).get();
+                                    imgg = new ImageResponse(i.getId(), ii.getUrl(), ii.getHeight(), ii.getWidth());
+                                    images.add(imgg);
+                                } catch (Exception e) {
+                                    images.add(null);
+                                }
+                            }
+                        }
+
+                        req = new ProjectRequestResponse(i.getId(), i.getUser_id(), i.getMessage(), imgs);
+                        requests.add(req);
+                    } catch (Exception e) {
+                        images.add(null);
+                    }
+                }
             }
-            if (values.get("email") != null){
-                u.setEmail((String) values.get("email"));
+
+            if (values.get("title") != null){
+                p.setTitle((String) values.get("title"));
             }
-            if (values.get("password") != null){
-                u.setPassword((String) values.get("password"));
+            if (values.get("message") != null){
+                p.setMessage((String) values.get("message"));
             }
-            if (values.get("first_name") != null){
-                u.setFirst_name((String) values.get("first_name"));
+            if (values.get("last_modified_time") != null){
+                p.setLast_modified_time((Long) values.get("last_modified_time"));
             }
-            if (values.get("last_name") != null){
-                u.setLast_name((String) values.get("last_name"));
+            if (values.get("image_ids") != null){
+                p.setImage_ids((Integer[]) values.get("image_ids"));
             }
-            if (values.get("is_online") != null){
-                u.setIs_online((Boolean) values.get("is_online"));
+            if (values.get("request_ids") != null){
+                p.setRequest_ids((Integer[]) values.get("request_ids"));
             }
-            if (values.get("is_banned") != null){
-                u.setIs_banned((Boolean) values.get("is_banned"));
-            }
-            if (values.get("is_admin") != null){
-                u.setIs_admin((Boolean) values.get("is_admin"));
-            }
-            if (values.get("last_session") != null){
-                u.setEmail((String) values.get("last_session"));
-            }
-            if (values.get("score") != null){
-                u.setScore((Integer) values.get("last_session"));
-            }
-            if (values.get("is_verified") != null){
-                u.setIs_verified((Boolean) values.get("is_verified"));
-            }
-            if (values.get("image_id") != null){
-                u.setImage_id((Integer) values.get("image_id"));
-            }
-            u = userRepository.findById(id).get();
-            UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
+
+            p = projectRepository.findById(id).get();
+            ProjectResponse res = new ProjectResponse(p.getId(), p.getTitle(), p.getMessage(), p.getUpload_time(), p.getLast_modified_time(),images, requests, p.getChat_id());
             response.setResponse(res);
             return response;
         } catch (Exception e){
