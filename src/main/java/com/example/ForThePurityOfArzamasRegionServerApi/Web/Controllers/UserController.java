@@ -28,26 +28,30 @@ public class UserController {
     @GetMapping("users.getById")
     public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUsers(@RequestParam(value = "user_ids", required = false) String user_ids) {
         ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
-        if(user_ids == null){
-            GetAllUsersUseCase getAllUsersUseCase = new GetAllUsersUseCase(userRepository, imageRepository);
-            return getAllUsersUseCase.execute();
-        }
-        else{
-            ArrayList<Integer> ids = new ArrayList<>();
-            for (String s : user_ids.split(",")){
-                try {
-                    ids.add(Integer.valueOf(s));
-                }
-                catch(Exception e) {
-                    response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 400));
-                    return response;
-                }
+        try{
+            if(user_ids == null){
+                GetAllUsersUseCase getAllUsersUseCase = new GetAllUsersUseCase(userRepository, imageRepository);
+                return getAllUsersUseCase.execute();
             }
-            GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
-            return getUserListById.execute();
+            else{
+                ArrayList<Integer> ids = new ArrayList<>();
+                for (String s : user_ids.split(",")){
+                    try {
+                        ids.add(Integer.valueOf(s));
+                    }
+                    catch(Exception e) {
+                        response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 400));
+                        return response;
+                    }
+                }
+                GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
+                return getUserListById.execute();
+            }
+        } catch (Exception e){
+            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
+            return response;
         }
-
-    }
+           }
 
     @PostMapping("users.setById")
     public @ResponseBody String setUserById(@RequestParam("user_id") String user_id, @RequestBody HashMap<String, Object> values) {

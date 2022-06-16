@@ -31,20 +31,19 @@ public class GetUserListByIdUseCase {
             for(Integer id : ids) {
                 try {
                     User u = userRepository.findById(id).get();
+                    ImageResponse img = null;
                     try {
-
-                        ImageResponse img = null;
                         if(u.getImage_id() != null){
                             Image i = imageRepository.findById(u.getImage_id()).get();
                             img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
                         }
 
-                        UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
-                        users.add(res);
+
                     } catch (Exception e) {
-                        response.setError(new ResponseError("Image not found", String.format("image with id %d not found: %s", u.getImage_id(), e.getMessage()), 500));
-                        return response;
+                        img = null;
                     }
+                    UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
+                    users.add(res);
                 } catch (Exception e){
                     response.setError(new ResponseError("User not found", String.format("user with id %d not found: %s", id, e.getMessage()), 404));
                     return response;
