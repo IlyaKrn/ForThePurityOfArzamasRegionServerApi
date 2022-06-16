@@ -12,14 +12,14 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.Re
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RefactorUserByIdUseCase {
+public class RewriteUserByIdUseCase {
 
     private UserRepository userRepository;
     private ImageRepository imageRepository;
     private Integer id;
     private HashMap<String, Object> values;
 
-    public RefactorUserByIdUseCase(UserRepository userRepository, ImageRepository imageRepository, Integer id, HashMap<String, Object> values) {
+    public RewriteUserByIdUseCase(UserRepository userRepository, ImageRepository imageRepository, Integer id, HashMap<String, Object> values) {
         this.userRepository = userRepository;
         this.imageRepository = imageRepository;
         this.id = id;

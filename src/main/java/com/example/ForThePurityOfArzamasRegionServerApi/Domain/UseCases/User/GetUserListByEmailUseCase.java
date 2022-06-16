@@ -11,14 +11,15 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.Re
 
 import java.util.ArrayList;
 
-public class GetAllUsersUseCase {
-
+public class GetUserListByEmailUseCase {
     private UserRepository userRepository;
     private ImageRepository imageRepository;
+    private String email;
 
-    public GetAllUsersUseCase(UserRepository userRepository, ImageRepository imageRepository) {
+    public GetUserListByEmailUseCase(UserRepository userRepository, ImageRepository imageRepository, String email) {
         this.userRepository = userRepository;
         this.imageRepository = imageRepository;
+        this.email = email;
     }
 
     public ResponseModel<ArrayList<UserResponse>> execute(){
@@ -28,17 +29,19 @@ public class GetAllUsersUseCase {
             ArrayList<User> us = (ArrayList<User>) userRepository.findAll();
             if(us.size() > 0) {
                 for (User u : us) {
-                    ImageResponse img = null;
-                    if (u.getImage_id() != null) {
-                        try {
-                            Image i = imageRepository.findById(u.getImage_id()).get();
-                            img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
-                        } catch (Exception e) {
-                            img = null;
+                    if(u.getEmail().equals(email)) {
+                        ImageResponse img = null;
+                        if (u.getImage_id() != null) {
+                            try {
+                                Image i = imageRepository.findById(u.getImage_id()).get();
+                                img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
+                            } catch (Exception e) {
+                                img = null;
+                            }
                         }
+                        UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
+                        users.add(res);
                     }
-                    UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
-                    users.add(res);
                 }
             }
             else {
