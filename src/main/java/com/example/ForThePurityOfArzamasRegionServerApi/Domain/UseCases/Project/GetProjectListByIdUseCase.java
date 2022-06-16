@@ -38,10 +38,10 @@ public class GetProjectListByIdUseCase {
                 Project p = projectRepository.findById(id).get();
                 ArrayList<ImageResponse> images = new ArrayList<>();
                 if (p.getImage_ids() != null && p.getImage_ids().length > 0) {
-                    for(Integer idd : p.getImage_ids()) {
+                    for(Integer id1 : p.getImage_ids()) {
                         ImageResponse img = null;
                         try {
-                            Image i = imageRepository.findById(idd).get();
+                            Image i = imageRepository.findById(id1).get();
                             img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
                             images.add(img);
                         } catch (Exception e) {
@@ -51,22 +51,20 @@ public class GetProjectListByIdUseCase {
                 }
                 ArrayList<ProjectRequestResponse> requests = new ArrayList<>();
                 if (p.getRequest_ids() != null && p.getRequest_ids().length > 0) {
-                    for(Integer idd : p.getRequest_ids()) {
+                    for(Integer id1 : p.getRequest_ids()) {
                         ProjectRequestResponse req = null;
                         try {
-                            ProjectRequest i = requestRepository.findById(idd).get();
-
-
+                            ProjectRequest i = requestRepository.findById(id1).get();
                             ArrayList<ImageResponse> imgs = new ArrayList<>();
                             if (i.getImage_ids() != null && i.getImage_ids().length > 0) {
-                                for(Integer iddd : p.getImage_ids()) {
+                                for(Integer idd : i.getImage_ids()) {
                                     ImageResponse imgg = null;
                                     try {
-                                        Image ii = imageRepository.findById(iddd).get();
+                                        Image ii = imageRepository.findById(idd).get();
                                         imgg = new ImageResponse(i.getId(), ii.getUrl(), ii.getHeight(), ii.getWidth());
-                                        images.add(imgg);
+                                        imgs.add(imgg);
                                     } catch (Exception e) {
-                                        images.add(null);
+                                        imgs.add(null);
                                     }
                                 }
                             }
@@ -74,7 +72,7 @@ public class GetProjectListByIdUseCase {
                             req = new ProjectRequestResponse(i.getId(), i.getUser_id(), i.getMessage(), imgs);
                             requests.add(req);
                         } catch (Exception e) {
-                            images.add(null);
+                            requests.add(null);
                         }
                     }
                 }

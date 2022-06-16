@@ -53,18 +53,16 @@ public class GetProjectListAllUseCase {
                         ProjectRequestResponse req = null;
                         try {
                             ProjectRequest i = requestRepository.findById(id).get();
-
-
                             ArrayList<ImageResponse> imgs = new ArrayList<>();
                             if (i.getImage_ids() != null && i.getImage_ids().length > 0) {
-                                for(Integer idd : p.getImage_ids()) {
+                                for(Integer idd : i.getImage_ids()) {
                                     ImageResponse imgg = null;
                                     try {
                                         Image ii = imageRepository.findById(idd).get();
                                         imgg = new ImageResponse(i.getId(), ii.getUrl(), ii.getHeight(), ii.getWidth());
-                                        images.add(imgg);
+                                        imgs.add(imgg);
                                     } catch (Exception e) {
-                                        images.add(null);
+                                        imgs.add(null);
                                     }
                                 }
                             }
@@ -72,7 +70,7 @@ public class GetProjectListAllUseCase {
                             req = new ProjectRequestResponse(i.getId(), i.getUser_id(), i.getMessage(), imgs);
                             requests.add(req);
                         } catch (Exception e) {
-                            images.add(null);
+                            requests.add(null);
                         }
                     }
                 }
