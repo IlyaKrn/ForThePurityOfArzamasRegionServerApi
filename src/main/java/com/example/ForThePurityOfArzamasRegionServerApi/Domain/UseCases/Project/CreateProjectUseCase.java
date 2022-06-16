@@ -26,9 +26,10 @@ public class CreateProjectUseCase {
     private ChatRepository chatRepository;
     private ProjectRequest project;
 
-    public CreateProjectUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, ProjectRequest project) {
+    public CreateProjectUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, ChatRepository chatRepository, ProjectRequest project) {
         this.projectRepository = projectRepository;
         this.imageRepository = imageRepository;
+        this.chatRepository = chatRepository;
         this.project = project;
     }
 
