@@ -24,20 +24,13 @@ public class DeleteUserUseCase {
 
     public ResponseModel<UserResponse> execute(){
         ResponseModel<UserResponse> response = new ResponseModel<>();
-        try {
-            try{
-                userRepository.deleteById(id);
-            } catch (Exception e){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("user with id %d not found", id), e);
-            }
-            response.setResponse(null);
-            return response;
+        try{
+            userRepository.deleteById(id);
         } catch (Exception e){
-            if(e instanceof ResponseStatusException)
-                throw e;
-            else
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "something went wrong", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("user with id %d not found", id), e);
         }
+        response.setResponse(null);
+        return response;
     }
 
 }

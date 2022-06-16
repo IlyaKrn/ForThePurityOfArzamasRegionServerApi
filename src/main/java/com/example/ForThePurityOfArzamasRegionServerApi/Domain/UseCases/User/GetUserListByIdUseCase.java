@@ -28,33 +28,27 @@ public class GetUserListByIdUseCase {
 
     public ResponseModel<ArrayList<UserResponse>> execute(){
         ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
-        try {
-            ArrayList<UserResponse> users = new ArrayList<>();
-            for(Integer id : ids) {
+        ArrayList<UserResponse> users = new ArrayList<>();
+        for(Integer id : ids) {
+            try {
+                User u = userRepository.findById(id).get();
+                ImageResponse img = null;
                 try {
-                    User u = userRepository.findById(id).get();
-                    ImageResponse img = null;
-                    try {
-                        if(u.getImage_id() != null){
-                            Image i = imageRepository.findById(u.getImage_id()).get();
-                            img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
-                        }
-                    } catch (Exception ignored) {
-
+                    if(u.getImage_id() != null){
+                        Image i = imageRepository.findById(u.getImage_id()).get();
+                        img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
                     }
-                    UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
-                    users.add(res);
-                } catch (Exception ignored){
-                    users.add(null);
+                } catch (Exception ignored) {
+
                 }
+                UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
+                users.add(res);
+            } catch (Exception ignored){
+                users.add(null);
             }
-            response.setResponse(users);
-            return response;
-        } catch (Exception e){
-            if(e instanceof ResponseStatusException)
-                throw e;
-            else
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "something went wrong", e);
         }
+        response.setResponse(users);
+        return response;
+
     }
 }

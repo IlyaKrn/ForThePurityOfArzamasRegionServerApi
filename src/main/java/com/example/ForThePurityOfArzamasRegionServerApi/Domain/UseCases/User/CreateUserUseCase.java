@@ -26,28 +26,22 @@ public class CreateUserUseCase {
 
     public ResponseModel<UserResponse> execute(){
         ResponseModel<UserResponse> response = new ResponseModel<>();
-        try {
-            if(user.getEmail() == null || user.getPassword() == null || user.getFirst_name() == null || user.getLast_name() == null){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fields 'email', 'password', 'first_name', 'last_name' must be not null", null);
-            }
-            User u = new User(null, user.getEmail(), user.getPassword(), 0, user.getFirst_name(), user.getLast_name(), false, false, false, false,System.currentTimeMillis(), null);
-            User temp = userRepository.save(u);
-            ImageResponse image = null;
-            if (temp.getImage_id() != null){
-                try {
-                    Image i = imageRepository.findById(temp.getImage_id()).get();
-                    image = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
-                } catch (Exception e){
-                    image = null;
-                }
-            }
-            response.setResponse(new UserResponse(temp.getImage_id(), temp.getEmail(), temp.getPassword(), temp.getScore(), temp.getFirst_name(), temp.getLast_name(), temp.getIs_admin(), temp.getIs_online(), temp.getIs_banned(), temp.getIs_verified(), temp.getLast_session(), image));
-            return response;
-        } catch (Exception e) {
-            if(e instanceof ResponseStatusException)
-                throw e;
-            else
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "something went wrong", e);
+        if(user.getEmail() == null || user.getPassword() == null || user.getFirst_name() == null || user.getLast_name() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fields 'email', 'password', 'first_name', 'last_name' must be not null", null);
         }
+        User u = new User(null, user.getEmail(), user.getPassword(), 0, user.getFirst_name(), user.getLast_name(), false, false, false, false,System.currentTimeMillis(), null);
+        User temp = userRepository.save(u);
+        ImageResponse image = null;
+        if (temp.getImage_id() != null){
+            try {
+                Image i = imageRepository.findById(temp.getImage_id()).get();
+                image = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
+            } catch (Exception e){
+                image = null;
+            }
+        }
+        response.setResponse(new UserResponse(temp.getImage_id(), temp.getEmail(), temp.getPassword(), temp.getScore(), temp.getFirst_name(), temp.getLast_name(), temp.getIs_admin(), temp.getIs_online(), temp.getIs_banned(), temp.getIs_verified(), temp.getLast_session(), image));
+        return response;
+
     }
 }
