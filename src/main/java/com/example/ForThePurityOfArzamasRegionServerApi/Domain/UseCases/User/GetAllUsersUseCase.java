@@ -1,4 +1,4 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
@@ -26,10 +26,10 @@ public class GetAllUsersUseCase {
         try {
             ArrayList<UserResponse> users = new ArrayList<>();
             ArrayList<User> us = (ArrayList<User>) userRepository.findAll();
-            try {
-                for(User u : us) {
+            if(us.size() > 0) {
+                for (User u : us) {
                     ImageResponse img = null;
-                    if(u.getImage_id() != null){
+                    if (u.getImage_id() != null) {
                         try {
                             Image i = imageRepository.findById(u.getImage_id()).get();
                             img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
@@ -40,9 +40,9 @@ public class GetAllUsersUseCase {
                     UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
                     users.add(res);
                 }
-
-            }catch (Exception e){
-                response.setError(new ResponseError("Users not found", String.format("users not found: %s", e.getMessage()), 404));
+            }
+            else {
+                response.setError(new ResponseError("Users not found", String.format("users not found: %s"), 404));
                 return response;
             }
             response.setResponse(users);

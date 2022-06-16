@@ -1,4 +1,4 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
@@ -37,8 +37,6 @@ public class GetUserListByIdUseCase {
                             Image i = imageRepository.findById(u.getImage_id()).get();
                             img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
                         }
-
-
                     } catch (Exception e) {
                         img = null;
                     }

@@ -2,14 +2,13 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Web.Controllers;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.User;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.UserRequest;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseError;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.CreateUserUseCase;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.GetAllUsersUseCase;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.GetUserListByIdUseCase;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User.CreateUserUseCase;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User.GetAllUsersUseCase;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User.GetUserListByIdUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,30 +27,30 @@ public class UserController {
     @GetMapping("users.getById")
     public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUsers(@RequestParam(value = "user_ids", required = false) String user_ids) {
         ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
-        try{
-            if(user_ids == null){
-                GetAllUsersUseCase getAllUsersUseCase = new GetAllUsersUseCase(userRepository, imageRepository);
-                return getAllUsersUseCase.execute();
-            }
-            else{
-                ArrayList<Integer> ids = new ArrayList<>();
-                for (String s : user_ids.split(",")){
-                    try {
-                        ids.add(Integer.valueOf(s));
-                    }
-                    catch(Exception e) {
-                        response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 400));
-                        return response;
-                    }
-                }
-                GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
-                return getUserListById.execute();
-            }
-        } catch (Exception e){
-            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
-            return response;
+        if(user_ids == null){
+            GetAllUsersUseCase getAllUsersUseCase = new GetAllUsersUseCase(userRepository, imageRepository);
+            return getAllUsersUseCase.execute();
         }
-           }
+        else{
+            ArrayList<Integer> ids = new ArrayList<>();
+            for (String s : user_ids.split(",")){
+                try {
+                    ids.add(Integer.valueOf(s));
+                }
+                catch(Exception e) {
+                    response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 400));
+                    return response;
+                }
+            }
+            GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
+            return getUserListById.execute();
+        }
+    }
+    @GetMapping("users.getByEmail")
+    public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUsersByEmail(@RequestParam("email") String email) {
+
+        return null;
+    }
 
     @PostMapping("users.setById")
     public @ResponseBody String setUserById(@RequestParam("user_id") String user_id, @RequestBody HashMap<String, Object> values) {

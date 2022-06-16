@@ -1,4 +1,4 @@
-package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases;
+package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
