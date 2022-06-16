@@ -9,6 +9,8 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Respo
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseError;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class CreateUserUseCase {
 
@@ -26,8 +28,7 @@ public class CreateUserUseCase {
         ResponseModel<UserResponse> response = new ResponseModel<>();
         try {
             if(user.getEmail() == null || user.getPassword() == null || user.getFirst_name() == null || user.getLast_name() == null){
-                response.setError(new ResponseError("Unexpected null data", String.format("Fields 'email', 'password', 'first_name', 'last_name' must be not null"), 400));
-                return response;
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fields 'email', 'password', 'first_name', 'last_name' must be not null", null);
             }
             User u = new User(null, user.getEmail(), user.getPassword(), 0, user.getFirst_name(), user.getLast_name(), false, false, false, false,System.currentTimeMillis(), null);
             User temp = userRepository.save(u);
@@ -43,8 +44,10 @@ public class CreateUserUseCase {
             response.setResponse(new UserResponse(temp.getImage_id(), temp.getEmail(), temp.getPassword(), temp.getScore(), temp.getFirst_name(), temp.getLast_name(), temp.getIs_admin(), temp.getIs_online(), temp.getIs_banned(), temp.getIs_verified(), temp.getLast_session(), image));
             return response;
         } catch (Exception e) {
-            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
-            return response;
+            if(e instanceof ResponseStatusException)
+                throw e;
+            else
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "something went wrong", e);
         }
     }
 }

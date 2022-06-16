@@ -8,6 +8,8 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Respo
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseError;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 
@@ -42,14 +44,17 @@ public class GetUserListAllUseCase {
                 }
             }
             else {
-                response.setError(new ResponseError("Users not found", String.format("users not found: %s"), 404));
+                users.add(null);
+                response.setResponse(users);
                 return response;
             }
             response.setResponse(users);
             return response;
         } catch (Exception e){
-            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
-            return response;
+            if(e instanceof ResponseStatusException)
+                throw e;
+            else
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "something went wrong", e);
         }
     }
 }

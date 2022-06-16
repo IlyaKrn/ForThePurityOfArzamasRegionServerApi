@@ -8,7 +8,9 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.Re
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +24,12 @@ public class UserController {
     @Autowired
     ImageRepository imageRepository;
 
-    @GetMapping("users.getList")
+    @GetMapping("users.getListAll")
     public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUserListAll() {
         GetUserListAllUseCase getAllUsersUseCase = new GetUserListAllUseCase(userRepository, imageRepository);
         return getAllUsersUseCase.execute();
     }
-    @GetMapping("users.getById")
+    @GetMapping("users.getListById")
     public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUserListById(@RequestParam(value = "user_ids") String user_ids) {
         ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
         ArrayList<Integer> ids = new ArrayList<>();
@@ -36,15 +38,14 @@ public class UserController {
                 ids.add(Integer.valueOf(s));
             }
             catch(Exception e) {
-                response.setError(new ResponseError("Type casting error", String.format("user id must be integer value: %s", e.getMessage()), 400));
-                return response;
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user_ids ust be integer", e);
             }
         }
 
         GetUserListByIdUseCase getUserListById = new GetUserListByIdUseCase(userRepository, imageRepository, ids);
         return getUserListById.execute();
     }
-    @GetMapping("users.getByEmail")
+    @GetMapping("users.getListByEmail")
     public @ResponseBody ResponseModel<ArrayList<UserResponse>> getUsersListByEmail(@RequestParam("email") String email) {
         GetUserListByEmailUseCase getByEmail = new GetUserListByEmailUseCase(userRepository, imageRepository, email);
         return getByEmail.execute();
@@ -64,8 +65,8 @@ public class UserController {
     }
 
     @PostMapping("users.delete")
-    public @ResponseBody ResponseModel<UserResponse> deleteUserById(@RequestParam("user_deleter_id") Integer user_deleter_id, @RequestParam("user_id") Integer user_id) {
-        DeleteUserUseCase deleteUserUseCase = new DeleteUserUseCase(userRepository, user_id, user_deleter_id);
+    public @ResponseBody ResponseModel<UserResponse> deleteUserById(@RequestParam("user_id") Integer user_id) {
+        DeleteUserUseCase deleteUserUseCase = new DeleteUserUseCase(userRepository, user_id);
         return deleteUserUseCase.execute();
     }
 }

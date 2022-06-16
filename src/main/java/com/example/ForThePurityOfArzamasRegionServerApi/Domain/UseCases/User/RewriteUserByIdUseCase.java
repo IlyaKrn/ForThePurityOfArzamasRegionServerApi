@@ -8,6 +8,8 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Respo
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseError;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,12 +80,13 @@ public class RewriteUserByIdUseCase {
                 response.setResponse(res);
                 return response;
             } catch (Exception e){
-                response.setError(new ResponseError("User not found", String.format("user with id %d not found: %s", id, e.getMessage()), 404));
-                return response;
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("user with id %d not found: %s", id), e);
             }
         } catch (Exception e){
-            response.setError(new ResponseError("Internal unexpected server error", String.format("something went wrong: %s", e.getMessage()), 500));
-            return response;
+            if(e instanceof ResponseStatusException)
+                throw e;
+            else
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "something went wrong", e);
         }
     }
 }
