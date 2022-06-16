@@ -3,16 +3,12 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.Project
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ChatRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ProjectRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.Chat;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.Image;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.Project;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.DatabaseModels.User;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.ProjectRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.UserRequest;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.ProjectMainRequest;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ImageResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ProjectResponse;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,9 +20,9 @@ public class CreateProjectUseCase {
     private ProjectRepository projectRepository;
     private ImageRepository imageRepository;
     private ChatRepository chatRepository;
-    private ProjectRequest project;
+    private ProjectMainRequest project;
 
-    public CreateProjectUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, ChatRepository chatRepository, ProjectRequest project) {
+    public CreateProjectUseCase(ProjectRepository projectRepository, ImageRepository imageRepository, ChatRepository chatRepository, ProjectMainRequest project) {
         this.projectRepository = projectRepository;
         this.imageRepository = imageRepository;
         this.chatRepository = chatRepository;

@@ -4,14 +4,11 @@ import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ChatRe
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ImageRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ProjectRepository;
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ProjectRequestRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.ProjectRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.UserRequest;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ProjectRequestResponse;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.ProjectMainRequest;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ProjectResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.Project.*;
-import com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.User.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +61,7 @@ public class ProjectController {
     }
 
     @PostMapping("projects.create")
-    public @ResponseBody ResponseModel<ProjectResponse> createProject(@RequestBody ProjectRequest project) {
+    public @ResponseBody ResponseModel<ProjectResponse> createProject(@RequestBody ProjectMainRequest project) {
         CreateProjectUseCase createProjectUseCase = new CreateProjectUseCase(projectRepository, imageRepository, chatRepository, project);
         return createProjectUseCase.execute();
     }

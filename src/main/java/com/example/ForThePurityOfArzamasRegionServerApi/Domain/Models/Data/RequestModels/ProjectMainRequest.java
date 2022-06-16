@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectRequest {
+public class ProjectMainRequest {
 
     private String title;
     private String message;
