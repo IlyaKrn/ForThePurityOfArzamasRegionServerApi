@@ -39,8 +39,8 @@ public class RewriteUserByIdUseCase {
                         Image i = imageRepository.findById(u.getImage_id()).get();
                         img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
                     }
-                } catch (Exception e) {
-                    img = null;
+                } catch (Exception ignored) {
+
                 }
                 if (values.get("email") != null){
                     u.setEmail((String) values.get("email"));
@@ -80,7 +80,7 @@ public class RewriteUserByIdUseCase {
                 response.setResponse(res);
                 return response;
             } catch (Exception e){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("user with id %d not found: %s", id), e);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("user with id %d not found", id), e);
             }
         } catch (Exception e){
             if(e instanceof ResponseStatusException)
