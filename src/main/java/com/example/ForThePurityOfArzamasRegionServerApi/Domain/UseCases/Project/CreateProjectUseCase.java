@@ -35,12 +35,11 @@ public class CreateProjectUseCase {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fields 'title', 'message' must be not null", null);
         }
 
-
-        Project p = new Project(null, project.getTitle(), project.getMessage(), System.currentTimeMillis(), null, project.getImage_ids(), null, null);
+        Chat c = chatRepository.save(new Chat(null, null, null));
+        Project p = new Project(null, project.getTitle(), project.getMessage(), System.currentTimeMillis(), null, project.getImage_ids(), null, c.getId());
         Project temp = projectRepository.save(p);
 
-        Chat c = chatRepository.save(new Chat(null, null, null));
-        p.setChat_id(c.getId());
+
 
         ArrayList<ImageResponse> images = new ArrayList<>();
         if (temp.getImage_ids() != null && temp.getImage_ids().length > 0){

@@ -1,6 +1,7 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Web.Controllers;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.*;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.LocateRequest;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.RequestModels.ProjectMainRequest;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.LocateResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
@@ -56,8 +57,8 @@ public class LocateController {
     }
 
     @PostMapping("locates.create")
-    public @ResponseBody ResponseModel<LocateResponse> createProject(@RequestBody ProjectMainRequest project) {
-        CreateLocateUseCase createProjectUseCase = new CreateLocateUseCase(locateRepository, imageRepository, chatRepository, project);
+    public @ResponseBody ResponseModel<LocateResponse> createProject(@RequestBody LocateRequest locate) {
+        CreateLocateUseCase createProjectUseCase = new CreateLocateUseCase(locateRepository, imageRepository, chatRepository, locate);
         return createProjectUseCase.execute();
     }
 
