@@ -31,7 +31,9 @@ public class UserResponse {
     private Boolean is_banned;
     @NonNull
     private Boolean is_verified;
+    @Nullable
     private Long last_session;
+    @Nullable
     private ImageResponse image;
 
 }

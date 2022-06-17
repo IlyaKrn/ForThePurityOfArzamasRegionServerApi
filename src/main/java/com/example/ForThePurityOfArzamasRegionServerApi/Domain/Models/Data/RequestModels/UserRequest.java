@@ -29,7 +29,9 @@ public class UserRequest {
     private Boolean is_banned;
     @NonNull
     private Boolean is_verified;
+    @Nullable
     private Long last_session;
+    @Nullable
     private Integer image_id;
 
 }

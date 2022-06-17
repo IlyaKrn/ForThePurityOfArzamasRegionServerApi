@@ -24,7 +24,9 @@ public class EventResponse {
     private Long last_modified_time;
     @NonNull
     private Integer type;
+    @Nullable
     private List<ImageResponse> images;
+    @Nullable
     private Integer[] member_ids;
     @NonNull
     private Integer chat_id;

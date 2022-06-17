@@ -24,8 +24,11 @@ public class Project {
     private String message;
     @NonNull
     private Long upload_time;
+    @Nullable
     private Long last_modified_time;
+    @Nullable
     private Integer[] image_ids;
+    @Nullable
     private Integer[] request_ids;
     @NonNull
     private Integer chat_id;

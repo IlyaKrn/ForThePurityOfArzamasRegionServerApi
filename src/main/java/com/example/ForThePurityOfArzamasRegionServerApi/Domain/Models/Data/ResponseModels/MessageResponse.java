@@ -15,7 +15,10 @@ public class MessageResponse {
 
     @NonNull
     private Integer id;
+    @Nullable
     private Integer user_id;
+    @Nullable
     private List<ImageResponse> images;
+    @Nullable
     private String message;
 }

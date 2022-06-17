@@ -11,7 +11,10 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 public class MessageRequest {
 
+    @Nullable
     private Integer user_id;
+    @Nullable
     private String message;
+    @Nullable
     private Integer[] image_ids;
 }

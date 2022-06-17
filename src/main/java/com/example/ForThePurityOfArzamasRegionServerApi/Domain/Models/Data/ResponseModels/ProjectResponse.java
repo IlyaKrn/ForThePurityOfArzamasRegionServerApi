@@ -21,8 +21,11 @@ public class ProjectResponse {
     private String message;
     @NonNull
     private Long upload_time;
+    @Nullable
     private Long last_modified_time;
+    @Nullable
     private List<ImageResponse> images;
+    @Nullable
     private List<ProjectRequestResponse> requests;
     @NonNull
     private Integer chat_id;

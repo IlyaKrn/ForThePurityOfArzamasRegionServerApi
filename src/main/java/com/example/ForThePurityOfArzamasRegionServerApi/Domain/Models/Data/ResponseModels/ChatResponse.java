@@ -16,6 +16,8 @@ public class ChatResponse {
 
     @NonNull
     private Integer id;
+    @Nullable
     private List<MessageResponse> messages;
+    @Nullable
     private Integer[] banned_user_ids;
 }

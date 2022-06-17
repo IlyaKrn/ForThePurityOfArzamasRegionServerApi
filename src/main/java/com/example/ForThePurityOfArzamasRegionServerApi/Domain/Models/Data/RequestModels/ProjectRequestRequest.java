@@ -15,5 +15,6 @@ public class ProjectRequestRequest {
     private Integer user_id;
     @NonNull
     private String message;
+    @Nullable
     private Integer[] image_ids;
 }

@@ -18,7 +18,10 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
     private Integer id;
+    @Nullable
     private Integer user_id;
+    @Nullable
     private Integer[] image_ids;
+    @Nullable
     private String message;
 }

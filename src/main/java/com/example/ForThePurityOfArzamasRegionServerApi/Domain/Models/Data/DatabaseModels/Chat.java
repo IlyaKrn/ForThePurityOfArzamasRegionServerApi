@@ -19,6 +19,8 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
     private Integer id;
+    @Nullable
     private Integer[] message_ids;
+    @Nullable
     private Integer[] banned_user_ids;
 }

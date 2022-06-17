@@ -21,5 +21,6 @@ public class LocateRequest {
     private Double longitude;
     @NonNull
     private Double latitude;
+    @Nullable
     private Integer[] image_ids;
 }

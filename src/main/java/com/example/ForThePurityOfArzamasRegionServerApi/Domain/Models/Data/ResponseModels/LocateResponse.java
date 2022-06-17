@@ -23,6 +23,7 @@ public class LocateResponse {
     private Long upload_time;
     @NonNull
     private Long last_modified_time;
+    @Nullable
     private List<ImageResponse> images;
     @NonNull
     private Integer chat_id;

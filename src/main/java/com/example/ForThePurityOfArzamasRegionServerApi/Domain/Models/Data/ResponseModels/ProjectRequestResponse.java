@@ -19,5 +19,6 @@ public class ProjectRequestResponse {
     private Integer user_id;
     @NonNull
     private String message;
+    @Nullable
     private List<ImageResponse> images;
 }

@@ -17,6 +17,7 @@ public class EventRequest {
     private String message;
     @NonNull
     private Integer type;
+    @Nullable
     private Integer[] image_ids;
 
 }

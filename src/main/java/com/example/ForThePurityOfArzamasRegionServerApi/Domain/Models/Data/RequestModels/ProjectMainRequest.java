@@ -17,6 +17,8 @@ public class ProjectMainRequest {
     private String message;
     @NonNull
     private Long upload_time;
+    @Nullable
     private Long last_modified_time;
+    @Nullable
     private Integer[] image_ids;
 }
