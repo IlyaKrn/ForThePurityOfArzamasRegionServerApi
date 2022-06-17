@@ -3,8 +3,6 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Data
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -16,12 +14,8 @@ import javax.persistence.*;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Integer id;
-    @NonNull
     private String url;
-    @NonNull
     private Integer height;
-    @NonNull
     private Integer width;
 }

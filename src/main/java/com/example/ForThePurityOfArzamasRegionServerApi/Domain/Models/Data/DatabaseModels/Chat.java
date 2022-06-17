@@ -4,8 +4,6 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Data
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -17,10 +15,7 @@ import javax.persistence.*;
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Integer id;
-    @Nullable
     private Integer[] message_ids;
-    @Nullable
     private Integer[] banned_user_ids;
 }
