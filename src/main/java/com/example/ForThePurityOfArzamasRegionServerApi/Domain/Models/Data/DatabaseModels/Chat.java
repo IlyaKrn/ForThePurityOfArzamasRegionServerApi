@@ -4,7 +4,8 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Data
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
