@@ -3,6 +3,7 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Resp
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.List;
 
@@ -11,14 +12,23 @@ import java.util.List;
 @NoArgsConstructor
 public class LocateResponse {
 
+    @NonNull
     private Integer id;
+    @NonNull
     private String title;
+    @NonNull
     private String message;
+    @NonNull
     private Long upload_time;
+    @NonNull
     private Long last_modified_time;
     private List<ImageResponse> images;
+    @NonNull
     private Integer chat_id;
+    @NonNull
     private String address;
+    @NonNull
     private Double longitude;
+    @NonNull
     private Double latitude;
 }

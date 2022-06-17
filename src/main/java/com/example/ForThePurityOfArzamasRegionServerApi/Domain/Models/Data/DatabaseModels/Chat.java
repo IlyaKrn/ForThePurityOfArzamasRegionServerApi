@@ -4,6 +4,7 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Data
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ import javax.persistence.*;
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Integer id;
     private Integer[] message_ids;
     private Integer[] banned_user_ids;

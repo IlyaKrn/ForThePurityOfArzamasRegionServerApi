@@ -3,6 +3,7 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Data
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ import javax.persistence.*;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NonNull
     private Integer id;
     private Integer user_id;
     private Integer[] image_ids;

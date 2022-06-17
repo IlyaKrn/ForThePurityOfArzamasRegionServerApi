@@ -3,6 +3,7 @@ package com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.Requ
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
