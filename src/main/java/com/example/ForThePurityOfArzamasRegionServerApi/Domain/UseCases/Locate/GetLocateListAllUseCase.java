@@ -22,7 +22,8 @@ public class GetLocateListAllUseCase {
     private ImageRepository imageRepository;
 
     public GetLocateListAllUseCase(LocateRepository locateRepository, ImageRepository imageRepository) {
-
+        this.locateRepository = locateRepository;
+        this.imageRepository = imageRepository;
     }
 
     public ResponseModel<ArrayList<LocateResponse>> execute() {

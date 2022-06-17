@@ -22,11 +22,13 @@ public class GetLocateListByIdUseCase {
 
 
     private LocateRepository projectRepository;
-    private ProjectRequestRepository requestRepository;
     private ImageRepository imageRepository;
     private ArrayList<Integer> ids;
 
-    public GetLocateListByIdUseCase(LocateRepository locateRepository, ImageRepository imageRepository, ArrayList<Integer> ids) {
+    public GetLocateListByIdUseCase(LocateRepository projectRepository, ImageRepository imageRepository, ArrayList<Integer> ids) {
+        this.projectRepository = projectRepository;
+        this.imageRepository = imageRepository;
+        this.ids = ids;
     }
 
     public ResponseModel<ArrayList<LocateResponse>> execute() {
