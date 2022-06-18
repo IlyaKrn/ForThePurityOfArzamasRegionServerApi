@@ -39,7 +39,6 @@ public class ProjectController {
 
     @GetMapping("projects.getListById")
     public @ResponseBody ResponseModel<ArrayList<ProjectResponse>> getUserListById(@RequestParam(value = "project_ids") String project_ids) {
-        ResponseModel<ArrayList<UserResponse>> response = new ResponseModel<>();
         ArrayList<Integer> ids = new ArrayList<>();
         for (String s : project_ids.split(",")){
             try {
@@ -67,7 +66,7 @@ public class ProjectController {
     }
 
     @PostMapping("projects.delete")
-    public @ResponseBody ResponseModel<UserResponse> deleteProjectById(@RequestParam("project_id") Integer project_id) {
+    public @ResponseBody ResponseModel<ProjectResponse> deleteProjectById(@RequestParam("project_id") Integer project_id) {
         DeleteProjectUseCase createProjectUseCase = new DeleteProjectUseCase(projectRepository, project_id);
         return createProjectUseCase.execute();
     }

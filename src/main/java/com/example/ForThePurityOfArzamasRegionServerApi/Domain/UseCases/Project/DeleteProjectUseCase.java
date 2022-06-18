@@ -1,7 +1,7 @@
 package com.example.ForThePurityOfArzamasRegionServerApi.Domain.UseCases.Project;
 
 import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.ProjectRepository;
-import com.example.ForThePurityOfArzamasRegionServerApi.Data.Repositories.UserRepository;
+import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.ProjectResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Data.ResponseModels.UserResponse;
 import com.example.ForThePurityOfArzamasRegionServerApi.Domain.Models.Support.ResponseModels.ResponseModel;
 import org.springframework.http.HttpStatus;
@@ -17,8 +17,8 @@ public class DeleteProjectUseCase {
         this.id = id;
     }
 
-    public ResponseModel<UserResponse> execute(){
-        ResponseModel<UserResponse> response = new ResponseModel<>();
+    public ResponseModel<ProjectResponse> execute(){
+        ResponseModel<ProjectResponse> response = new ResponseModel<>();
         try{
             projectRepository.deleteById(id);
         } catch (Exception e){
