@@ -88,16 +88,14 @@ public class RewriteProjectByIdUseCase {
             if (values.get("message") != null){
                 p.setMessage((String) values.get("message"));
             }
-            if (values.get("last_modified_time") != null){
-                p.setLast_modified_time((Long) values.get("last_modified_time"));
-            }
             if (values.get("image_ids") != null){
                 p.setImage_ids((Integer[]) values.get("image_ids"));
             }
             if (values.get("request_ids") != null){
                 p.setRequest_ids((Integer[]) values.get("request_ids"));
             }
-
+            p.setLast_modified_time(System.currentTimeMillis());
+            projectRepository.save(p);
             p = projectRepository.findById(id).get();
             ProjectResponse res = new ProjectResponse(p.getId(), p.getTitle(), p.getMessage(), p.getUpload_time(), p.getLast_modified_time(),images, requests, p.getChat_id());
             response.setResponse(res);
