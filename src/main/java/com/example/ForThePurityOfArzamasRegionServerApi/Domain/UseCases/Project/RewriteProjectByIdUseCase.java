@@ -91,9 +91,6 @@ public class RewriteProjectByIdUseCase {
             if (values.get("image_ids") != null){
                 p.setImage_ids((Integer[]) values.get("image_ids"));
             }
-            if (values.get("request_ids") != null){
-                p.setRequest_ids((Integer[]) values.get("request_ids"));
-            }
             p.setLast_modified_time(System.currentTimeMillis());
             projectRepository.save(p);
             p = projectRepository.findById(id).get();

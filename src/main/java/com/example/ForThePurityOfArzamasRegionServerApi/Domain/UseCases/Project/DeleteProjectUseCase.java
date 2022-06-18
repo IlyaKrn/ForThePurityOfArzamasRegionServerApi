@@ -22,7 +22,7 @@ public class DeleteProjectUseCase {
         try{
             projectRepository.deleteById(id);
         } catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("user with id %d not found", id), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("project with id %d not found", id), e);
         }
         response.setResponse(null);
         return response;
