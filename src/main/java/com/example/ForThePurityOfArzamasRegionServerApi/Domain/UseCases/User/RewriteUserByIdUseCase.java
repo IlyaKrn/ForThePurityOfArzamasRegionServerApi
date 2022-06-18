@@ -55,15 +55,14 @@ public class RewriteUserByIdUseCase {
             }
             if (values.get("is_online") != null){
                 u.setIs_online((Boolean) values.get("is_online"));
+                if (values.get("is_online").equals("false"))
+                    u.setLast_session(System.currentTimeMillis());
             }
             if (values.get("is_banned") != null){
                 u.setIs_banned((Boolean) values.get("is_banned"));
             }
             if (values.get("is_admin") != null){
                 u.setIs_admin((Boolean) values.get("is_admin"));
-            }
-            if (values.get("last_session") != null){
-                u.setEmail((String) values.get("last_session"));
             }
             if (values.get("score") != null){
                 u.setScore((Integer) values.get("last_session"));
