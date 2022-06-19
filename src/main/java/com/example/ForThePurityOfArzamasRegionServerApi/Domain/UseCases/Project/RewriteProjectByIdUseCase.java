@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RewriteProjectByIdUseCase {
 
@@ -89,7 +90,7 @@ public class RewriteProjectByIdUseCase {
                 p.setMessage((String) values.get("message"));
             }
             if (values.get("image_ids") != null){
-                p.setImage_ids((Integer[]) values.get("image_ids"));
+                p.setImage_ids(((List<Integer>)values.get("image_ids")).toArray(new Integer[0]));
             }
             p.setLast_modified_time(System.currentTimeMillis());
             projectRepository.save(p);

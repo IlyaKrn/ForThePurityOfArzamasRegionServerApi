@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RewriteEventByIdUseCase {
 
@@ -58,7 +59,7 @@ public class RewriteEventByIdUseCase {
                 p.setMessage((String) values.get("message"));
             }
             if (values.get("image_ids") != null){
-                p.setImage_ids((Integer[]) values.get("image_ids"));
+                p.setImage_ids(((List<Integer>)values.get("image_ids")).toArray(new Integer[0]));
             }
             if (values.get("type") != null){
                 p.setType((Integer) values.get("type"));
