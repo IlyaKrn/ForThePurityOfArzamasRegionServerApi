@@ -51,7 +51,6 @@ public class GetLocateListAllUseCase {
             }
         }
         else {
-            projects.add(null);
             response.setResponse(projects);
             return response;
         }

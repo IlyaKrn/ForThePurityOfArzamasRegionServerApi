@@ -43,7 +43,6 @@ public class GetUserListAllUseCase {
             }
         }
         else {
-            users.add(null);
             response.setResponse(users);
             return response;
         }

@@ -51,7 +51,6 @@ public class GetEventListAllUseCase {
             }
         }
         else {
-            projects.add(null);
             response.setResponse(projects);
             return response;
         }

@@ -83,7 +83,6 @@ public class GetProjectListAllUseCase {
             }
         }
         else {
-            projects.add(null);
             response.setResponse(projects);
             return response;
         }
