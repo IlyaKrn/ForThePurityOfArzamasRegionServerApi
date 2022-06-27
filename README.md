@@ -1,5 +1,9 @@
 # ForThePurityOfArzamasRegionServerApi
 
+## Модели данных
+Для отправки **от сервера к клиенту** данных об объектах, хранящихся в базе данных, используются классы из пакета Domain.Models.Data.ResponseModels, помещённые в ResponseModel</br></br>
+Для отправки **от клиента к серверу** данных об объектах, данные о которых необхдимо сохраненить, используются классы из пакета Domain.Models.Data.RequestModels</br></br>
+Для **хранения данных в бд** используются классы из пакета , используются классы из пакета Domain.Models.Data.DatabaseModels</br></br>
 ## GET method/users.getListAll
 ### Возврат
 Возвращает данные всех пользователей
