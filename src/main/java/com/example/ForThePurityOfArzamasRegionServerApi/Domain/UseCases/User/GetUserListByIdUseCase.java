@@ -33,13 +33,13 @@ public class GetUserListByIdUseCase {
             try {
                 User u = userRepository.findById(id).get();
                 ImageResponse img = null;
-                try {
-                    if(u.getImage_id() != null){
+                if(u.getImage_id() != null){
+                    try {
                         Image i = imageRepository.findById(u.getImage_id()).get();
                         img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
-                    }
-                } catch (Exception ignored) {
+                    } catch (Exception ignored) {
 
+                    }
                 }
                 UserResponse res = new UserResponse(u.getId(), u.getEmail(), u.getPassword(), u.getScore(), u.getFirst_name(), u.getLast_name(), u.getIs_admin(), u.getIs_online(), u.getIs_banned(), u.getIs_verified(), u.getLast_session(), img);
                 users.add(res);

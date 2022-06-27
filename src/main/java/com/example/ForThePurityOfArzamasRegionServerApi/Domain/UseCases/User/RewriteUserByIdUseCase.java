@@ -33,13 +33,13 @@ public class RewriteUserByIdUseCase {
         try {
             User u = userRepository.findById(id).get();
             ImageResponse img = null;
-            try {
-                if(u.getImage_id() != null){
+            if(u.getImage_id() != null){
+                try {
                     Image i = imageRepository.findById(u.getImage_id()).get();
                     img = new ImageResponse(i.getId(), i.getUrl(), i.getHeight(), i.getWidth());
-                }
-            } catch (Exception ignored) {
+                } catch (Exception ignored) {
 
+                }
             }
             if (values.get("email") != null){
                 u.setEmail((String) values.get("email"));

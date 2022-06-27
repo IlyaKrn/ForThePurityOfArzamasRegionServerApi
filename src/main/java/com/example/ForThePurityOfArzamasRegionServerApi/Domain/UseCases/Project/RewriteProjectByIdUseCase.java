@@ -59,8 +59,6 @@ public class RewriteProjectByIdUseCase {
                     ProjectRequestResponse req = null;
                     try {
                         ProjectRequest i = requestRepository.findById(id).get();
-
-
                         ArrayList<ImageResponse> imgs = new ArrayList<>();
                         if (i.getImage_ids() != null && i.getImage_ids().length > 0) {
                             for (Integer idd : p.getImage_ids()) {
