@@ -1,8 +1,8 @@
 # ForThePurityOfArzamasRegionServerApi
 
 ## Описание
-Сервер для мобильного приложения "За чистоту Арзамасского края!", созданный как альтернатива Firebase</br>
-<a href="https://github.com/IlyaKrn/ForThePurityOfArzamasRegion/">Приложение</a>
+Сервер для <a href="https://github.com/IlyaKrn/ForThePurityOfArzamasRegion/">мобильного приложения</a> "За чистоту Арзамасского края!", созданный как альтернатива Firebase</br>
+Для хранения данных используется <a href="https://www.postgresql.org/">PostgeSQL</a>
 ## Модели данных
 Для отправки **от сервера к клиенту** данных об объектах, хранящихся в базе данных, используются классы из пакета Domain.Models.Data.ResponseModels, помещённые в ResponseModel</br></br>
 Для отправки **от клиента к серверу** данных об объектах, данные о которых необхдимо сохраненить, используются классы из пакета Domain.Models.Data.RequestModels</br></br>
